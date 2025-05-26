@@ -1,0 +1,32 @@
+name: CD Example Production
+
+on:
+ push:
+   branches:
+      - main
+
+jobs:
+   deploy:
+      name: CD Example Production
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout My Code
+        uses: actions/checkout@v4
+      - name: SSH Connect
+        uses: appleboy/ssh-action@v1
+        with:
+           host: ${{ secrets.SERVER_HOST }}
+           username: ${{ secrets.SERVER_USER }}
+           password: ${{ secrets.SERVER_PASSWORD }}
+           port: 22
+           script: |
+             echo"Berhasil Konek ke Server"
+             if [ -d "/home/maria" ]; then
+               echo "Ada folder MARIA"
+               cd /home/maria
+               echo "Berhasil Masuk ke Folder MARIA"
+             else
+               echo "Gak ada folder MARIA, membuat folder..."
+               mkdir /home/maria
+               cd/home/maria
+             fi 
